@@ -26,4 +26,6 @@ This is a [Flask](https://flask.palletsprojects.com/en/1.1.x/) app that serves a
 ```shell
 virtualenv venv
 source venv/bin/activate
+
+gunicorn -b 0.0.0.0:$PORT -w 1 app:app
 ```
