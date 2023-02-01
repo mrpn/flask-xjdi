@@ -10,5 +10,5 @@ discord-webhook
 SQLAlchemy
 psycopg2
 blinker
-Flask-Limiter
+Flask-Limiter[memcached]
 flask-discord-interactions
