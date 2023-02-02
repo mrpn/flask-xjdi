@@ -23,7 +23,10 @@ This is a [Flask](https://flask.palletsprojects.com/en/1.1.x/) app that serves a
 - Start the server for development `python3 main.py`
 
 ## Local development
-```shell
+
+`export FLASK_APP=run.py` to add to shell or `python run.py` for dev
+
+```bash
 virtualenv venv
 source venv/bin/activate
 
