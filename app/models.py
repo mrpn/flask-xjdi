@@ -16,21 +16,6 @@ characters_ref = db.Table("characters_ref",
     db.Column("character_id", db.Integer, db.ForeignKey("character.id")),
 )
 
-bidders_ref = db.Table("bidders_ref",
-    db.Column("user_id", db.BigInteger, db.ForeignKey("user.id")),
-    db.Column("bid_id", db.Integer, db.ForeignKey("loot.id")),
-)
-
-winners_ref = db.Table("winners_ref",
-    db.Column("user_id", db.BigInteger, db.ForeignKey("user.id")),
-    db.Column("win_id", db.Integer, db.ForeignKey("loot.id")),
-)
-
-scouts_ref = db.Table("scouts_ref",
-    db.Column("user_id", db.BigInteger, db.ForeignKey("user.id")),
-    db.Column("win_id", db.Integer, db.ForeignKey("loot.id")),
-)
-
 class User(UserMixin, db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
     discord_locale = db.Column(db.String(7), unique=False, index=False, nullable=True)
@@ -48,8 +33,6 @@ class User(UserMixin, db.Model):
     discord_roles = db.relationship('Role', secondary=roles_ref, back_populates='discord_users', lazy='joined')
     characters = db.relationship('Character', secondary=characters_ref, back_populates='characters', lazy='dynamic')
     screenshot = db.Column(db.String(240), unique=False, index=False, nullable=True)
-    bids = db.relationship('Loot', secondary=bidders_ref, back_populates='bidders', lazy='dynamic')
-    wins = db.relationship('Loot', secondary=winners_ref, back_populates='winners', lazy='dynamic')
     def __repr__(self):
         return '<User {}>'.format(self.id) 
 

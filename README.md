@@ -26,6 +26,8 @@ This is a [Flask](https://flask.palletsprojects.com/en/1.1.x/) app that serves a
 
 `export FLASK_APP=run.py` to add to shell or `python run.py` for dev
 
+to register commands python run.py register
+
 ```bash
 virtualenv venv
 source venv/bin/activate

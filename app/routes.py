@@ -4,19 +4,15 @@ from datetime import datetime
 import datetime
 import requests
 import json
-from sqlalchemy import MetaData
-from config import Config
-from flask_sqlalchemy import SQLAlchemy
 from app import app, db, discord
 from app.models import *
-
 
 
 def getSnowflakeTimestamp(snowflake):
     DiscordEpoch = 1420070400000
     input = int(snowflake)
     UnixTSinMS = input / 4194304 + DiscordEpoch
-    out = str(datetime.datetime.fromtimestamp(UnixTSinMS/1000.0))
+    out = str(datetime.fromtimestamp(UnixTSinMS/1000.0))
     return out
 
 # role configs. 
@@ -36,7 +32,7 @@ role_recruit = 652983677852188672
 
 @app.route('/')
 def index():
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
+    return jsonify({"message": "Hello!"})
 
 @app.route('/sync', methods=['GET'])
 def sync():
@@ -167,13 +163,19 @@ def sync():
     else:
         return jsonify({"message": "ERROR: Unauthorized"}), 401
 
-
    
 @discord.command()
 def ping(ctx):
     "Respond with a friendly 'pong'!"
     return "Pong!"
 
+@discord.command()
+def user(ctx):
+    "Respond with a friendly 'pong'!"
+    return "Pong!"
+
+
 
 discord.set_route("/interactions")
-discord.update_commands(guild_id=os.environ.get("TESTING_GUILD"))
+
+
