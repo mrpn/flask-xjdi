@@ -6,6 +6,8 @@ import requests
 import json
 from app import app, db, discord
 from app.models import *
+from sqlalchemy import cast, or_
+from flask_discord_interactions import DiscordInteractions, Member, Channel, Role, Permission
 
 
 def getSnowflakeTimestamp(snowflake):
@@ -163,17 +165,21 @@ def sync():
     else:
         return jsonify({"message": "ERROR: Unauthorized"}), 401
 
-   
-@discord.command()
-def ping(ctx):
-    "Respond with a friendly 'pong'!"
-    return "Pong!"
 
 @discord.command()
-def user(ctx):
-    "Respond with a friendly 'pong'!"
-    return "Pong!"
-
+def info(ctx, value: str):
+    print(ctx.channel_id)
+    print(ctx.author)
+    print(value)
+    return 'test'
+    # q = value
+    # if q is not None:
+    #     results = (User.query
+    #     .outerjoin(User.characters)
+    #     # .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%')))
+    #     .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
+    #     .all())
+    #     return results
 
 
 discord.set_route("/interactions")
