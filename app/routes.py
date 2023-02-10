@@ -167,11 +167,14 @@ def sync():
 
 
 @discord.command()
-def info(ctx, value: str):
+def info(ctx, value: str = None):
     print(ctx.channel_id)
     print(ctx.author)
     print(value)
-    return 'test'
+    if ctx.channel.id == 1020065348445274283:
+        return 'test'
+    else:
+        return 'nope'
     # q = value
     # if q is not None:
     #     results = (User.query
