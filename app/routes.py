@@ -176,18 +176,19 @@ def info(ctx, user: str = None):
     print(ctx.channel_id)
     print(ctx.author)
     print(user)
-    if ctx.channel_id == 1020065348445274283:
+    if ctx.channel_id == '1020065348445274283':
+        q = user
+        if q is not None:
+            results = (User.query
+            .outerjoin(User.characters)
+            # .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%')))
+            .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
+            .all())
+            print(results) 
         return 'test'
     else:
         return 'nope'
-    # q = value
-    # if q is not None:
-    #     results = (User.query
-    #     .outerjoin(User.characters)
-    #     # .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%')))
-    #     .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
-    #     .all())
-    #     return results
+    
 
 discord.set_route("/interactions")
 
