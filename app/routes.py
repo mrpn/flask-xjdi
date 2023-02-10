@@ -185,6 +185,5 @@ def info(ctx, value: str = None):
     #     return results
 
 
-discord.set_route("/interactions")
 
 
