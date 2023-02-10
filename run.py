@@ -7,8 +7,8 @@ import os
 discord = DiscordInteractions(app)
 # python run.py register to update commands
 if "register" in sys.argv:
-    discord.set_route("/interactions")
-    discord.update_commands(guild_id=os.environ.get("GUILD_ID"))
+    # discord.update_commands(guild_id=os.environ.get("GUILD_ID"))
+    discord.update_commands(guild_id=600479716616699935)
     print('updated commands')
     sys.exit()
 

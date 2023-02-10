@@ -167,7 +167,7 @@ def sync():
 
 
 @discord.command()
-def info(ctx, value: str = None):
+def infotwo(ctx, value: str = None):
     print(ctx.channel_id)
     print(ctx.author)
     print(value)
