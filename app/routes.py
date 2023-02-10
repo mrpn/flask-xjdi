@@ -172,11 +172,11 @@ def ping(ctx):
 
 
 @discord.command()
-def infotwo(ctx, value: str = None):
+def info(ctx, user: str = None):
     print(ctx.channel_id)
     print(ctx.author)
-    print(value)
-    if ctx.channel.id == 1020065348445274283:
+    print(user)
+    if ctx.channel_id == 1020065348445274283:
         return 'test'
     else:
         return 'nope'
