@@ -165,7 +165,12 @@ def sync():
     else:
         return jsonify({"message": "ERROR: Unauthorized"}), 401
 
+@discord.command()
+def ping(ctx):
+    "Respond with a friendly 'pong'!"
+    return "Pong!"
 
+    
 @discord.command()
 def infotwo(ctx, value: str = None):
     print(ctx.channel_id)
