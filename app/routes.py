@@ -54,7 +54,8 @@ def sync():
         #clear all previous roles
         db.session.query(User).update({User.key_role: None}, synchronize_session=False)
         db.session.query(roles_ref).delete()
-        db.session.delete(Role)
+        db.session.query(Role).delete()
+        db.session.commit()
         #bulk insert roles
         db.session.bulk_insert_mappings(Role, filtered_data)
         db.session.commit()
