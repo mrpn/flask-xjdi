@@ -178,7 +178,7 @@ def ping(ctx):
 
 @discord.command()
 def info(ctx, user: str = None):
-    print(f'{ctx.author} used {user}')
+    print(f'{ctx.author_id} used {user}')
     if ctx.channel_id == '1020065348445274283':
         q = Markup.escape(user)
         if q is not None:
@@ -212,6 +212,8 @@ def info(ctx, user: str = None):
                 # if there are 2 - 10 results
                 elif len(results) > 1 and len(results) < 10:
                     print(results)
+                    for x in results:
+                        print(x.name)
                     return '2 - 10 results.'
                 # if results more than 10
                 else:
