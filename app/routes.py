@@ -211,7 +211,7 @@ def info(ctx, user: str = None):
                 )
                 # if there are 2 - 10 results
                 elif len(results) > 1 and len(results) < 10:
-                    print(results.name)
+                    print(results)
                     return '2 - 10 results.'
                 # if results more than 10
                 else:
