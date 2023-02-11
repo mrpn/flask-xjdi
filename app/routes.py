@@ -54,7 +54,7 @@ def sync():
         #clear all previous roles
         db.session.query(User).update({User.key_role: None}, synchronize_session=False)
         db.session.query(roles_ref).delete()
-        db.session.query(Role).delete()
+        db.session.delete(Role)
         #bulk insert roles
         db.session.bulk_insert_mappings(Role, filtered_data)
         db.session.commit()
@@ -177,9 +177,7 @@ def ping(ctx):
 
 @discord.command()
 def info(ctx, user: str = None):
-    print(ctx.channel_id)
-    print(ctx.author)
-    print(user)
+    print(f'{ctx.author} used {user}')
     if ctx.channel_id == '1020065348445274283':
         q = user
         if q is not None:
