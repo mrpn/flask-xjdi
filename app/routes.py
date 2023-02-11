@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, render_template, flash, session, jsonify
+from flask import Flask, request, redirect, url_for, render_template, flash, session, jsonify, Markup
 import os
 from datetime import datetime
 import datetime
@@ -180,7 +180,7 @@ def ping(ctx):
 def info(ctx, user: str = None):
     print(f'{ctx.author} used {user}')
     if ctx.channel_id == '1020065348445274283':
-        q = user
+        q = Markup.escape(user)
         if q is not None:
             results = (User.query
             .outerjoin(User.characters)
@@ -190,7 +190,7 @@ def info(ctx, user: str = None):
                 # if results is greater than 1
                 if len(results) == 1:
                     return Message(
-                    content=f"Found `{len(results)}` results for `{user}` query.",
+                    content=f"Found **`{len(results)}`** results for **`{user}`** query.",
                     embed={
                         "title": results.name,
                         "description": "Avatar Info",
@@ -210,42 +210,13 @@ def info(ctx, user: str = None):
                     }
                 )
                 # if there are 2 - 10 results
-                elif len(results) < 10:
-                    for result in results:
-                        print(result.name)
-                    return 'more than 5 results'
-                # if results more than 5
+                elif len(results) > 1 and len(results) < 10:
+                    print(results.name)
+                    return '2 - 10 results.'
+                # if results more than 10
                 else:
                     return Message(
-                    content=f"Found `{len(results)}` results for `{user}` query.",
-                    embed={
-                        "title": "title ~~(did you know you can have markdown here too?)~~",
-                        "description": "this supports [named links](https://discordapp.com) on top of the previously shown subset of markdown. ```\nyes, even code blocks```",
-                        "url": "https://discordapp.com",
-                        "color": 3362437,
-                        "timestamp": "2023-02-11T01:05:27.434Z",
-                        "footer": {
-                        "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png",
-                        "text": "footer text"
-                        },
-                        "thumbnail": {
-                        "url": "https://cdn.discordapp.com/embed/avatars/0.png"
-                        },
-                        "image": {
-                        "url": "https://cdn.discordapp.com/embed/avatars/0.png"
-                        },
-                        "author": {
-                        "name": "author name",
-                        "url": "https://discordapp.com",
-                        "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"
-                        },
-                        "fields": [
-                        {
-                            "name": "Name",
-                            "value": "some of these properties have certain limits..."
-                        },
-                        ]
-                    }
+                    content=f"Found **`{len(results)}` results** for **`{user}`** query. Please be more specific or visit https://faceguild.app/search?q={Markup.escape(user)}",
                     )
             # no result found
             else:
