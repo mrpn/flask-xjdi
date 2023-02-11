@@ -189,6 +189,7 @@ def info(ctx, user: str = None):
                 # if results is greater than 1
                 if len(results) > 1:
                     return Message(
+                    content=f"Found {len(results)} for {user} query.",
                     embed={
                         "title": ctx.author.display_name,
                         "description": "Avatar Info",
@@ -209,7 +210,12 @@ def info(ctx, user: str = None):
                 )
                 # multiple results
                 else:
-                    return results
+                    return Message(
+                    content=f"Found {len(results)} for {user} query.",
+                    embed={
+                        "title": ctx.author.display_name,
+                    }
+                    )
             # no result found
             else:
                 return Message(
