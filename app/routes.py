@@ -7,8 +7,12 @@ import json
 from app import app, db, discord
 from app.models import *
 from sqlalchemy import cast, or_
-from flask_discord_interactions import DiscordInteractions, Member, Channel, Role, Permission
+from flask_discord_interactions import DiscordInteractions, Member, Channel, Role, Permission, Message
 
+@app.before_first_request
+def register_commands():
+    print("registering commands!")
+    discord.update_commands(guild_id=os.environ.get("GUILD_ID"))
 
 def getSnowflakeTimestamp(snowflake):
     DiscordEpoch = 1420070400000
@@ -181,13 +185,48 @@ def info(ctx, user: str = None):
         if q is not None:
             results = (User.query
             .outerjoin(User.characters)
-            # .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%')))
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all())
-            print(results) 
-        return 'test'
+            if results is not None:
+            # if results is greater than 1
+                if len(results) > 1:
+                    return Message(
+                    embed={
+                        "title": ctx.author.display_name,
+                        "description": "Avatar Info",
+                        "fields": [
+                            {"name": "Member Since", "value": ctx.author.joined_at},
+                            {
+                                "name": "Username",
+                                "value": (
+                                    f"**{ctx.author.username}**" f"#{ctx.author.discriminator}"
+                                ),
+                            },
+                            {"name": "User ID", "value": ctx.author.id},
+                            {"name": "Channel ID", "value": ctx.channel_id},
+                            {"name": "Guild ID", "value": ctx.guild_id},
+                        ],
+                        "image": {"url": ctx.author.avatar_url},
+                    }
+                )
+            # multiple results
+                else:
+                    return results
+            # no result found
+            else:
+                return Message(
+                    content="No results found. Try /info anal",
+                    ephemeral=True,
+                )
+        return Message(
+                    content='Query not provided.',
+                    ephemeral=True,
+                )
     else:
-        return 'nope'
+        return Message(
+            content="You are not allowed to use this command here.",
+            ephemeral=True,
+        )
     
 
 discord.set_route("/interactions")
