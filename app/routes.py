@@ -185,8 +185,8 @@ def info(ctx, user: str = None):
             .outerjoin(User.characters)
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all())
-            if results is not None:
-            # if results is greater than 1
+            if results:
+                # if results is greater than 1
                 if len(results) > 1:
                     return Message(
                     embed={
@@ -207,7 +207,7 @@ def info(ctx, user: str = None):
                         "image": {"url": ctx.author.avatar_url},
                     }
                 )
-            # multiple results
+                # multiple results
                 else:
                     return results
             # no result found
