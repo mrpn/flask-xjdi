@@ -188,11 +188,11 @@ def info(ctx, user: str = None):
             .all())
             if results:
                 # if results is greater than 1
-                if len(results) > 1:
+                if len(results) == 1:
                     return Message(
-                    content=f"Found {len(results)} for {user} query.",
+                    content=f"Found `{len(results)}` results for `{user}` query.",
                     embed={
-                        "title": ctx.author.display_name,
+                        "title": results.name,
                         "description": "Avatar Info",
                         "fields": [
                             {"name": "Member Since", "value": ctx.author.joined_at},
@@ -209,12 +209,42 @@ def info(ctx, user: str = None):
                         "image": {"url": ctx.author.avatar_url},
                     }
                 )
-                # multiple results
+                # if there are 2 - 10 results
+                elif len(results) < 10:
+                    for result in results:
+                        print(result.name)
+                    return 'more than 5 results'
+                # if results more than 5
                 else:
                     return Message(
-                    content=f"Found {len(results)} for {user} query.",
+                    content=f"Found `{len(results)}` results for `{user}` query.",
                     embed={
-                        "title": ctx.author.display_name,
+                        "title": "title ~~(did you know you can have markdown here too?)~~",
+                        "description": "this supports [named links](https://discordapp.com) on top of the previously shown subset of markdown. ```\nyes, even code blocks```",
+                        "url": "https://discordapp.com",
+                        "color": 3362437,
+                        "timestamp": "2023-02-11T01:05:27.434Z",
+                        "footer": {
+                        "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+                        "text": "footer text"
+                        },
+                        "thumbnail": {
+                        "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+                        },
+                        "image": {
+                        "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+                        },
+                        "author": {
+                        "name": "author name",
+                        "url": "https://discordapp.com",
+                        "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+                        },
+                        "fields": [
+                        {
+                            "name": "Name",
+                            "value": "some of these properties have certain limits..."
+                        },
+                        ]
                     }
                     )
             # no result found
