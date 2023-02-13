@@ -206,10 +206,12 @@ def info(ctx, user: str = None):
                         user_info_key_role = "Not member"
                     else:
                         user_info_key_role = f"<@&{str(results[0].key_role)}>"
-                    if results[0].characters is None:
+                    print(results[0].characters)
+                    if results[0].characters:
                         user_info_characters = "No characters found"
                     else:
                         user_info_characters = ", ".join(result_dict['0']['characters'][:-1])
+                    print(notes)
                     if notes:
                         user_notes_truncated = "No notes found"
                     if results[0].avatar is None:
