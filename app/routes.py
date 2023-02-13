@@ -199,7 +199,8 @@ def info(ctx, user: str = None):
                 # if results is greater than 1
                 if len(results) == 1:
                     user_info_characters = ", ".join(result_dict['0']['characters'][:-1])  
-                    print(user_info_characters)      
+                    if not user_info_characters:
+                        user_info_characters = "No characters found"
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
                     user_notes = "\n".join([f"**{x.author.name}:** {x.body}" for x in notes])
                     user_notes_truncated = user_notes[:140] + (user_notes[140:] and '...')
