@@ -180,7 +180,7 @@ def info(ctx, user: str = None):
             results = (User.query
             .outerjoin(User.characters)
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
-            .all())
+            .all()) 
             if results:
                 result_dict = {}
                 for index, i in enumerate(results):
@@ -199,6 +199,7 @@ def info(ctx, user: str = None):
                 print(result_dict)
                 # if results is greater than 1
                 if len(results) == 1:
+                    notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
                     if results[0].avatar is None:
                         avatar_url = f"https://cdn.discordapp.com/embed/avatars/0.png"
                     else:
@@ -222,6 +223,7 @@ def info(ctx, user: str = None):
                             {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
                             {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
+                            {"name": "Notes", "value": "\n".join([f"{x.comment}" for x in notes])},
                         ],
                     }
                 )
