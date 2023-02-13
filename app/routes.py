@@ -209,7 +209,7 @@ def info(ctx, user: str = None):
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "timestamp": str(datetime.now()).split('.')[0],
+                        # "timestamp": str(datetime.now()).split('.')[0],
                         "thumbnail": {
                             "url": avatar_url
                         },
@@ -217,13 +217,13 @@ def info(ctx, user: str = None):
                             "url": result_dict['0']['screenshot']
                         },
                         "fields": [
-                            {"name": "Name", "value": f"<@{result_dict['0']['name']}>"},
+                            {"name": "Name", "value": f"<@{result_dict['0']['id']}>"},
                             {"name": "Rank", "value": f"<@&{result_dict['0']['key_role']}>", "inline": True},
                             {"name": "Locale", "value": result_dict['0']['discord_locale'], "inline": True},
                             {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
                             {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
-                            {"name": "Notes", "value": "\n".join([f"{x.author.name} - {x.body}" for x in notes])},
+                            {"name": "Notes (5)", "value": "\n".join([f"{x.author.name}: {x.body} \n" for x in notes])},
                         ],
                     }
                 )
