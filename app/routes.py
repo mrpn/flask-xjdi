@@ -201,12 +201,12 @@ def info(ctx, user: str = None):
                 if len(results) == 1:
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
                     print(notes)
-                    user_notes = "\n".join([f"{x.author.name}: {x.body} \n" for x in notes])
+                    user_notes = "".join([f"{x.author.name}: {x.body} \n" for x in notes])
                     user_notes_truncated = user_notes[:140] + (user_notes[140:] and '...')
                     if results[0].avatar is None:
-                        avatar_url = f"https://cdn.discordapp.com/embed/avatars/0.png"
+                        results[0].avatar = f"https://cdn.discordapp.com/embed/avatars/0.png"
                     else:
-                        avatar_url = f"https://cdn.discordapp.com/avatars/{results[0].id}/{results[0].avatar}.png"
+                        results[0].avatar = f"https://cdn.discordapp.com/avatars/{results[0].id}/{results[0].avatar}.png"
                     if results[0].screenshot is None:
                         result_dict['0']['screenshot'] = "https://cdn.discordapp.com/embed/avatars/0.png"
                     return Message(
@@ -214,7 +214,7 @@ def info(ctx, user: str = None):
                     embed={
                         # "timestamp": str(datetime.now()).split('.')[0],
                         "thumbnail": {
-                            "url": avatar_url
+                            "url": results[0].avatar
                         },
                         "image": {
                             "url": result_dict['0']['screenshot']
