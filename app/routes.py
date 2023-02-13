@@ -173,7 +173,7 @@ def sync():
 
 @discord.command()
 def info(ctx, user: str = None):
-    print(f'{datetime.utcnow} - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
+    print(f'{datetime.utcnow.isoformat()} - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
     if ctx.channel_id == '1020065348445274283':
         q = Markup.escape(user)
         if q is not None:
@@ -221,9 +221,8 @@ def info(ctx, user: str = None):
                             {"name": "Locale", "value": result_dict['0']['discord_locale'], "inline": True},
                             {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
-                            {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
+                            {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True}
                         ],
-                        "image": {"url": result_dict['0']['screenshot']},
                     }
                 )
                 # if there are 2 - 10 results
