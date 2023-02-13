@@ -241,7 +241,7 @@ def info(ctx, user: str = None):
                 )
                 # if there are 2 - 10 results
                 elif len(results) <= 10:
-                    fields = [{"name": "chars"}]
+                    fields = []
                     for x in results:
                         field = {"name": x.name, "value": ", ".join([z.name for z in x.characters][:-1])}
                         fields.append(field)
@@ -249,7 +249,11 @@ def info(ctx, user: str = None):
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "fields": fields,
+                        "fields": [
+                            {'name': 'chars'}, 
+                            {'name': 'Yogurt', 'value': "Yog'urt, Doomer, Galadwel, Korhan, Yogurt"}, 
+                            {'name': 'StevenP#1090', 'value': 'cute wang, pp touch, cutie, yogurt explosion, dolan, ydal, ur cute, waifu, cute boi, ploop, ugly, cute, princess tutu, poofster'},
+                            ],
                     }
                 )
 
