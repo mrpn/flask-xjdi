@@ -181,24 +181,23 @@ def info(ctx, user: str = None):
             .outerjoin(User.characters)
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all()) 
-            print(results)
             if results:
-                result_dict = {}
-                for index, i in enumerate(results):
-                    result_dict[f"{index}"] = {}
-                    result_dict[f"{index}"]["id"] = str(i.id)
-                    result_dict[f"{index}"]["name"] = str(i.name)
-                    result_dict[f"{index}"]["avatar"] = str(i.avatar)
-                    result_dict[f"{index}"]["key_role"] = str(i.key_role)
-                    result_dict[f"{index}"]["discord_locale"] = str(i.discord_locale)
-                    result_dict[f"{index}"]["screenshot"] = str(i.screenshot)
-                    result_dict[f"{index}"]["created"] = i.created.strftime("%d %b, %Y %H:%M")
-                    result_dict[f"{index}"]["joined"] = i.joined.strftime("%d %b, %Y %H:%M")
-                    result_dict[f"{index}"]["characters"] = []
-                    for x in i.characters:
-                        result_dict[f"{index}"]["characters"].append(x.name)
                 # if results is greater than 1
                 if len(results) == 1:
+                    result_dict = {}
+                    for index, i in enumerate(results):
+                        result_dict[f"{index}"] = {}
+                        result_dict[f"{index}"]["id"] = str(i.id)
+                        result_dict[f"{index}"]["name"] = str(i.name)
+                        result_dict[f"{index}"]["avatar"] = str(i.avatar)
+                        result_dict[f"{index}"]["key_role"] = str(i.key_role)
+                        result_dict[f"{index}"]["discord_locale"] = str(i.discord_locale)
+                        result_dict[f"{index}"]["screenshot"] = str(i.screenshot)
+                        result_dict[f"{index}"]["created"] = i.created.strftime("%d %b, %Y %H:%M")
+                        result_dict[f"{index}"]["joined"] = i.joined.strftime("%d %b, %Y %H:%M")
+                        result_dict[f"{index}"]["characters"] = []
+                        for x in i.characters:
+                            result_dict[f"{index}"]["characters"].append(x.name)
                     user_info_characters = ", ".join(result_dict['0']['characters'][:-1])  
                     if not user_info_characters:
                         user_info_characters = "No characters found"
