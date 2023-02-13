@@ -223,7 +223,7 @@ def info(ctx, user: str = None):
                             {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
                             {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
-                            {"name": "Notes", "value": "\n".join([f"{x.comment}" for x in notes])},
+                            {"name": "Notes", "value": "\n".join([f"{x.author.name} - {x.body}" for x in notes])},
                         ],
                     }
                 )
