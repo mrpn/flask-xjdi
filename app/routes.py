@@ -173,7 +173,7 @@ def sync():
 
 @discord.command()
 def info(ctx, user: str = None):
-    print(f'{str(datetime.datetime.utcnow().isoformat())} - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
+    print(f'{str(datetime.utcnow().isoformat())} - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
     if ctx.channel_id == '1020065348445274283':
         q = Markup.escape(user)
         if q is not None:
@@ -208,7 +208,7 @@ def info(ctx, user: str = None):
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "timestamp": datetime.datetime.now(),
+                        "timestamp": datetime.now(),
                         "thumbnail": {
                             "url": avatar_url
                         },
