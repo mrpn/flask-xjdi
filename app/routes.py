@@ -165,7 +165,7 @@ def sync():
         
         #save everything
         db.session.commit()
-        print(datetime.now(), ' - ', 'Database updated')
+        print(str(datetime.now()), ' - ', 'Database updated')
         return jsonify({"message": "OK: Authorized"}), 200
     else:
         return jsonify({"message": "ERROR: Unauthorized"}), 401
@@ -173,7 +173,7 @@ def sync():
 
 @discord.command()
 def info(ctx, user: str = None):
-    print(f'DATE - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
+    print(f'{str(datetime.now())} - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
     if ctx.channel_id == '1020065348445274283':
         q = Markup.escape(user)
         if q is not None:
@@ -185,11 +185,11 @@ def info(ctx, user: str = None):
                 result_dict = {}
                 for index, i in enumerate(results):
                     result_dict[f"{index}"] = {}
-                    result_dict[f"{index}"]["id"] = i.id
-                    result_dict[f"{index}"]["name"] = i.name
+                    result_dict[f"{index}"]["id"] = str(i.id)
+                    result_dict[f"{index}"]["name"] = str(i.name)
                     result_dict[f"{index}"]["avatar"] = i.avatar
                     result_dict[f"{index}"]["key_role"] = i.key_role
-                    result_dict[f"{index}"]["discord_locale"] = i.discord_locale
+                    result_dict[f"{index}"]["discord_locale"] = str(i.discord_locale)
                     result_dict[f"{index}"]["screenshot"] = i.screenshot
                     result_dict[f"{index}"]["created"] = i.created.strftime("%d %b, %Y %H:%M")
                     result_dict[f"{index}"]["joined"] = i.joined.strftime("%d %b, %Y %H:%M")
@@ -200,6 +200,7 @@ def info(ctx, user: str = None):
                 # if results is greater than 1
                 if len(results) == 1:
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
+                    print(notes)
                     user_notes = "\n".join([f"{x.author.name}: {x.body} \n" for x in notes])
                     user_notes_truncated = user_notes[:140] + (user_notes[140:] and '...')
                     if results[0].avatar is None:
