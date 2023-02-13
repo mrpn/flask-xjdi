@@ -184,7 +184,10 @@ def info(ctx, user: str = None):
             if results:
                 print(results)
                 for i in results:
-                    print(i)
+                    print(i.id)
+                    print(i.name)
+                    for x in i.characters:
+                        print(x.name)
                 # if results is greater than 1
                 if len(results) == 1:
                     return Message(
