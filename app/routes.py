@@ -184,33 +184,46 @@ def info(ctx, user: str = None):
             if results:
                 result_dict = {}
                 for index, i in enumerate(results):
-                    result_dict[f"result_{index}"] = {}
+                    result_dict[f"{index}"] = {}
                     result_dict[f"result_{index}"]["id"] = i.id
                     result_dict[f"result_{index}"]["name"] = i.name
+                    result_dict[f"result_{index}"]["avatar"] = i.avatar
+                    result_dict[f"result_{index}"]["key_role"] = i.key_role
+                    result_dict[f"result_{index}"]["discrod_locale"] = i.discrod_locale
+                    result_dict[f"result_{index}"]["screenshot"] = i.screenshot
+                    result_dict[f"result_{index}"]["created"] = i.created
+                    result_dict[f"result_{index}"]["joined"] = i.joined
                     result_dict[f"result_{index}"]["characters"] = []
                     for x in i.characters:
                         result_dict[f"result_{index}"]["characters"].append(x.name)
                 print(result_dict)
                 # if results is greater than 1
                 if len(results) == 1:
+                    if results[0].avatar is None:
+                        avatar_url = f"https://cdn.discordapp.com/embed/avatars/0.png"
+                    else:
+                        avatar_url = f"https://cdn.discordapp.com/avatars/{results[0].id}/{results[0].avatar}.png"
+                    if result_dict['0']['screenshot'] is None:
+                        result_dict['0']['screenshot'] = "https://cdn.discordapp.com/embed/avatars/0.png"
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "title": "name",
-                        "description": "Avatar Info",
+                        "timestamp": datetime.utcnow().isoformat(),
+                        "thumbnail": {
+                            "url": avatar_url
+                        },
+                        "image": {
+                            "url": result_dict['0']['screenshot']
+                        },
                         "fields": [
-                            {"name": "Member Since", "value": ctx.author.joined_at},
-                            {
-                                "name": "Username",
-                                "value": (
-                                    f"**{ctx.author.username}**" f"#{ctx.author.discriminator}"
-                                ),
-                            },
-                            {"name": "User ID", "value": ctx.author.id},
-                            {"name": "Channel ID", "value": ctx.channel_id},
-                            {"name": "Guild ID", "value": ctx.guild_id},
+                            {"name": "Name", "value": result_dict['0']['name']},
+                            {"name": "Rank", "value": f"<@&{result_dict['0']['key_role']}>", "inline": True},
+                            {"name": "Locale", "value": result_dict['0']['discord_locale'], "inline": True},
+                            {"name": "Characters", "value": ", ".join(result_dict[0]['characters'][:-1])},
+                            {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
+                            {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
                         ],
-                        "image": {"url": ctx.author.avatar_url},
+                        "image": {"url": result_dict['0']['screenshot']},
                     }
                 )
                 # if there are 2 - 10 results
