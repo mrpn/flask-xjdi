@@ -194,14 +194,12 @@ def info(ctx, user: str = None):
                     result_dict[f"{index}"]["created"] = i.created.strftime("%d %b, %Y %H:%M")
                     result_dict[f"{index}"]["joined"] = i.joined.strftime("%d %b, %Y %H:%M")
                     result_dict[f"{index}"]["characters"] = []
-                    if len(i.characters) == 0:
-                        user_info_characters = "No characters found"
-                    else:
-                        for x in i.characters:
-                            result_dict[f"{index}"]["characters"].append(x.name)
-                        user_info_characters = ", ".join(result_dict['0']['characters'][:-1])
+                    for x in i.characters:
+                        result_dict[f"{index}"]["characters"].append(x.name)
                 # if results is greater than 1
                 if len(results) == 1:
+                    user_info_characters = ", ".join(result_dict['0']['characters'][:-1])  
+                    print(user_info_characters)      
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
                     user_notes = "\n".join([f"**{x.author.name}:** {x.body}" for x in notes])
                     user_notes_truncated = user_notes[:140] + (user_notes[140:] and '...')
