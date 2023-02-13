@@ -208,7 +208,7 @@ def info(ctx, user: str = None):
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "timestamp": 'now',
+                        # "timestamp": 'now',
                         "thumbnail": {
                             "url": avatar_url
                         },
