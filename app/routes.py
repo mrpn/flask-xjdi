@@ -243,7 +243,7 @@ def info(ctx, user: str = None):
                 elif len(results) <= 10:
                     fields = []
                     for x in results:
-                        field = {"name": f"<@{x.id}>", "value": f"[🌐 Web profile](https://faceguild.app/member/{x.id})" + ", ".join([z.name for z in x.characters][:-1])}
+                        field = {"name": f"{x.name}", "value": f"**[🌐 Web profile](https://faceguild.app/member/{x.id})** - <@{x.id}> " + ", ".join([z.name for z in x.characters][:-1])}
                         fields.append(field)
                     print(fields)
                     return Message(
