@@ -194,13 +194,12 @@ def info(ctx, user: str = None):
                     result_dict[f"{index}"]["created"] = i.created.strftime("%d %b, %Y %H:%M")
                     result_dict[f"{index}"]["joined"] = i.joined.strftime("%d %b, %Y %H:%M")
                     result_dict[f"{index}"]["characters"] = []
-                    if results[0].characters:
+                    if len(i.characters) == 0:
+                        user_info_characters = "No characters found"
+                    else:
                         for x in i.characters:
                             result_dict[f"{index}"]["characters"].append(x.name)
                         user_info_characters = ", ".join(result_dict['0']['characters'][:-1])
-                    else:
-                        user_info_characters = "No characters found"
-                print(result_dict)
                 # if results is greater than 1
                 if len(results) == 1:
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
@@ -210,8 +209,7 @@ def info(ctx, user: str = None):
                         user_info_key_role = "Not member"
                     else:
                         user_info_key_role = f"<@&{str(results[0].key_role)}>"
-                    print(notes)
-                    if notes:
+                    if not notes:
                         user_notes_truncated = "No notes found"
                     if results[0].avatar is None:
                         results[0].avatar = f"https://cdn.discordapp.com/embed/avatars/0.png"
