@@ -187,7 +187,9 @@ def info(ctx, user: str = None):
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all())
             if results:
-                print(results)
+                print(vars(results))
+                for i in results:
+                    print(vars(i))
                 # if results is greater than 1
                 if len(results) == 1:
                     return Message(
