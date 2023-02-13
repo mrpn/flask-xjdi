@@ -201,7 +201,7 @@ def info(ctx, user: str = None):
                 if len(results) == 1:
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
                     print(notes)
-                    user_notes = "".join([f"**{x.author.name}:** {x.body} \n" for x in notes])
+                    user_notes = "\n".join([f"**{x.author.name}:** {x.body}" for x in notes])
                     user_notes_truncated = user_notes[:140] + (user_notes[140:] and '...')
                     if results[0].avatar is None:
                         results[0].avatar = f"https://cdn.discordapp.com/embed/avatars/0.png"
