@@ -173,7 +173,7 @@ def sync():
 
 @discord.command()
 def info(ctx, user: str = None):
-    print(f'{ctx.author.id} ({ctx.author.display_name}) searched: {user}')
+    print(f'{datetime.utcnow} - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
     if ctx.channel_id == '1020065348445274283':
         q = Markup.escape(user)
         if q is not None:
@@ -182,16 +182,18 @@ def info(ctx, user: str = None):
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all())
             if results:
+                result_dict = {}
                 print(results)
                 for i in results:
-                    print(i.id)
-                    print(i.name)
+                    result_dict[i.id] = i
+                    result_dict[i.name] = i.name
                     for x in i.characters:
-                        print(x.name)
+                        result_dict[i.id]['characters'] = [x.name]
+                print(result_dict)
                 # if results is greater than 1
                 if len(results) == 1:
                     return Message(
-                    content=f"Found **`{len(results)}`** results for **`{user}`** query.",
+                    content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
                         "title": "name",
                         "description": "Avatar Info",
@@ -218,7 +220,7 @@ def info(ctx, user: str = None):
                 # if results more than 10
                 else:
                     return Message(
-                    content=f"Found **`{len(results)}` results** for **`{user}`** query. Please be more specific or visit https://faceguild.app/search?q={Markup.escape(user)}",
+                    content=f"Found **`{len(results)}` results** for **`{user}`**. Please be more specific or visit https://faceguild.app/search?q={Markup.escape(user)}",
                     )
             # no result found
             else:
