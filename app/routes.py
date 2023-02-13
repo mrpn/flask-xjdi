@@ -7,7 +7,7 @@ import json
 from app import app, db, discord
 from app.models import *
 from sqlalchemy import cast, or_
-from flask_discord_interactions import DiscordInteractions, Member, Channel, Role, Permission, Message
+from flask_discord_interactions import DiscordInteractions, Member, Channel, Permission, Message
 
 @app.before_first_request
 def register_commands():
