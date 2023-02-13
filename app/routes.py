@@ -241,16 +241,14 @@ def info(ctx, user: str = None):
                 )
                 # if there are 2 - 10 results
                 elif len(results) <= 10:
-                    for x in results:
-                        print(x.name)
-                        for z in x.characters:
-                            print(z.name)
+                    fields = [{"name": "chars"}]
+                    for item in results:
+                        field = {"name": item.name, "value": ", ".join([z.name for z in x.characters][:-1])}
+                        fields.append(field)
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "fields": [
-                            {"name": "Name | ID", "value": f"chars"},
-                        ],
+                        "fields": fields,
                     }
                 )
                 # if results more than 10
