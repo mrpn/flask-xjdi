@@ -240,10 +240,19 @@ def info(ctx, user: str = None):
                     }
                 )
                 # if there are 2 - 10 results
-                elif len(results) >= 2 and len(results) < 10:
+                elif len(results) > 1 and len(results) < 10:
                     for x in results:
                         print(x.name)
-                    return '2 - 10 results.'
+                        for z in x.characters:
+                            print(z.name)
+                    return Message(
+                    content=f"Found **`{len(results)}`** results for **`{user}`**",
+                    embed={
+                        "fields": [
+                            {"name": "Name | ID", "value": f"chars"},
+                        ],
+                    }
+                )
                 # if results more than 10
                 else:
                     return Message(
