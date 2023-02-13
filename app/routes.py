@@ -174,7 +174,7 @@ def sync():
 @discord.command()
 def info(ctx, user: str = None):
     print(f'{str(datetime.now())} - {ctx.author.id} ({ctx.author.display_name}) searched: {user}')
-    if ctx.channel_id == '1020065348445274283':
+    if ctx.channel_id == '967746388429508648':
         q = Markup.escape(user)
         if q is not None:
             results = (User.query
