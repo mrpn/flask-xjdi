@@ -187,12 +187,13 @@ def info(ctx, user: str = None):
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all())
             if results:
+                print(results)
                 # if results is greater than 1
                 if len(results) == 1:
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`** query.",
                     embed={
-                        "title": results.name,
+                        "title": "name",
                         "description": "Avatar Info",
                         "fields": [
                             {"name": "Member Since", "value": ctx.author.joined_at},
@@ -211,7 +212,6 @@ def info(ctx, user: str = None):
                 )
                 # if there are 2 - 10 results
                 elif len(results) > 1 and len(results) < 10:
-                    print(results)
                     for x in results:
                         print(x.name)
                     return '2 - 10 results.'
