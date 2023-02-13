@@ -202,15 +202,15 @@ def info(ctx, user: str = None):
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
                     user_notes = "\n".join([f"**{x.author.name}:** {x.body}" for x in notes])
                     user_notes_truncated = user_notes[:140] + (user_notes[140:] and '...')
-                    if results[0].name is None:
-                        user_info= str(results[0].id)
-                    else:
-                        user_info = f"<@{str(results[0].name)}>"
                     if results[0].key_role is None:
-                        user_info_key_role = str(results[0].id)
+                        user_info_key_role = "Not member"
                     else:
                         user_info_key_role = f"<@&{str(results[0].key_role)}>"
-                    if notes is None:
+                    if results[0].characters is None:
+                        user_info_characters = "No characters found"
+                    else:
+                        user_info_characters = ", ".join(result_dict['0']['characters'][:-1])
+                    if notes:
                         user_notes_truncated = "No notes found"
                     if results[0].avatar is None:
                         results[0].avatar = f"https://cdn.discordapp.com/embed/avatars/0.png"
@@ -230,10 +230,10 @@ def info(ctx, user: str = None):
                             "url": result_dict['0']['screenshot']
                         },
                         "fields": [
-                            {"name": "Name/ID", "value": f"{user_info}"},
+                            {"name": "Name/ID", "value": f"<@{result_dict['0']['id']}>"},
                             {"name": "Rank", "value": f"{user_info_key_role}", "inline": True},
                             {"name": "Locale", "value": result_dict['0']['discord_locale'], "inline": True},
-                            {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
+                            {"name": "Characters", "value": user_info_characters},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
                             {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
                             {"name": f"Notes ({len(notes)})", "value": user_notes_truncated},
