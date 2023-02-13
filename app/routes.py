@@ -219,7 +219,7 @@ def info(ctx, user: str = None):
                             {"name": "Name", "value": result_dict['0']['name']},
                             {"name": "Rank", "value": f"<@&{result_dict['0']['key_role']}>", "inline": True},
                             {"name": "Locale", "value": result_dict['0']['discord_locale'], "inline": True},
-                            {"name": "Characters", "value": ", ".join(result_dict[0]['characters'][:-1])},
+                            {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
                             {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
                         ],
@@ -227,7 +227,7 @@ def info(ctx, user: str = None):
                     }
                 )
                 # if there are 2 - 10 results
-                elif len(results) > 1 and len(results) < 10:
+                elif len(results) >= 2 and len(results) < 10:
                     for x in results:
                         print(x.name)
                     return '2 - 10 results.'
