@@ -170,15 +170,10 @@ def sync():
     else:
         return jsonify({"message": "ERROR: Unauthorized"}), 401
 
-@discord.command()
-def ping(ctx):
-    "Respond with a friendly 'pong'!"
-    return "Pong!"
-
 
 @discord.command()
 def info(ctx, user: str = None):
-    print(f'{ctx.author.id} used {user}')
+    print(f'{ctx.author.id} ({ctx.author.name}) searched: {user}')
     if ctx.channel_id == '1020065348445274283':
         q = Markup.escape(user)
         if q is not None:
@@ -187,9 +182,9 @@ def info(ctx, user: str = None):
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all())
             if results:
-                print(vars(results))
+                print(results)
                 for i in results:
-                    print(vars(i))
+                    print(i)
                 # if results is greater than 1
                 if len(results) == 1:
                     return Message(
