@@ -183,12 +183,13 @@ def info(ctx, user: str = None):
             .all())
             if results:
                 result_dict = {}
-                print(results)
-                for i in results:
-                    result_dict[i.id] = i
-                    result_dict[i.name] = i.name
+                for index, i in enumerate(results):
+                    result_dict[f"result_{index}"] = {}
+                    result_dict[f"result_{index}"]["id"] = i.id
+                    result_dict[f"result_{index}"]["name"] = i.name
+                    result_dict[f"result_{index}"]["characters"] = []
                     for x in i.characters:
-                        result_dict[i.id]['characters'] = [x.name]
+                        result_dict[f"result_{index}"]["characters"].append(x.name)
                 print(result_dict)
                 # if results is greater than 1
                 if len(results) == 1:
