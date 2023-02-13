@@ -7,7 +7,7 @@ import json
 from app import app, db, discord
 from app.models import *
 from sqlalchemy import cast, or_
-from flask_discord_interactions import DiscordInteractions, Member, Channel, Permission, Message
+from flask_discord_interactions import DiscordInteractions, Member, Channel, Permission, Message, Embed, embed
 
 @app.before_first_request
 def register_commands():
@@ -203,12 +203,12 @@ def info(ctx, user: str = None):
                         avatar_url = f"https://cdn.discordapp.com/embed/avatars/0.png"
                     else:
                         avatar_url = f"https://cdn.discordapp.com/avatars/{results[0].id}/{results[0].avatar}.png"
-                    if result_dict['0']['screenshot'] is None:
+                    if results[0].screenshot is None:
                         result_dict['0']['screenshot'] = "https://cdn.discordapp.com/embed/avatars/0.png"
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "timestamp": datetime.utcnow().isoformat(),
+                        "timestamp": str(datetime.utcnow().isoformat()),
                         "thumbnail": {
                             "url": avatar_url
                         },
@@ -221,7 +221,7 @@ def info(ctx, user: str = None):
                             {"name": "Locale", "value": result_dict['0']['discord_locale'], "inline": True},
                             {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
-                            {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True}
+                            {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
                         ],
                     }
                 )
