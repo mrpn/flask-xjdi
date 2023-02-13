@@ -194,8 +194,12 @@ def info(ctx, user: str = None):
                     result_dict[f"{index}"]["created"] = i.created.strftime("%d %b, %Y %H:%M")
                     result_dict[f"{index}"]["joined"] = i.joined.strftime("%d %b, %Y %H:%M")
                     result_dict[f"{index}"]["characters"] = []
-                    for x in i.characters:
-                        result_dict[f"{index}"]["characters"].append(x.name)
+                    if results[0].characters:
+                        for x in i.characters:
+                            result_dict[f"{index}"]["characters"].append(x.name)
+                        user_info_characters = ", ".join(result_dict['0']['characters'][:-1])
+                    else:
+                        user_info_characters = "No characters found"
                 print(result_dict)
                 # if results is greater than 1
                 if len(results) == 1:
@@ -206,11 +210,6 @@ def info(ctx, user: str = None):
                         user_info_key_role = "Not member"
                     else:
                         user_info_key_role = f"<@&{str(results[0].key_role)}>"
-                    print(results[0].characters)
-                    if results[0].characters:
-                        user_info_characters = "No characters found"
-                    else:
-                        user_info_characters = ", ".join(result_dict['0']['characters'][:-1])
                     print(notes)
                     if notes:
                         user_notes_truncated = "No notes found"
