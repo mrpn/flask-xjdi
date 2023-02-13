@@ -198,7 +198,7 @@ def info(ctx, user: str = None):
                     for x in i.characters:
                         result_dict[f"{index}"]["characters"].append(x.name)
                 # if results is greater than 1
-                if len(results) >= 1:
+                if len(results) == 1:
                     user_info_characters = ", ".join(result_dict['0']['characters'][:-1])  
                     if not user_info_characters:
                         user_info_characters = "No characters found"
@@ -241,7 +241,7 @@ def info(ctx, user: str = None):
                     }
                 )
                 # if there are 2 - 10 results
-                elif len(results) >= 2 and len(results) < 10:
+                elif len(results) <= 10:
                     for x in results:
                         print(x.name)
                         for z in x.characters:
