@@ -181,6 +181,7 @@ def info(ctx, user: str = None):
             .outerjoin(User.characters)
             .filter(or_(Character.name.ilike(f'%{q}%'), User.name.ilike(f'%{q}%'), cast(User.id, db.String).ilike(f'%{q}%')))
             .all()) 
+            print(results)
             if results:
                 result_dict = {}
                 for index, i in enumerate(results):
