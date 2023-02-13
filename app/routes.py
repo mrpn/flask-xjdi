@@ -249,11 +249,7 @@ def info(ctx, user: str = None):
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
-                        "fields": [
-                            {'name': 'chars'}, 
-                            {'name': 'Yogurt', 'value': "Yog'urt, Doomer, Galadwel, Korhan, Yogurt"}, 
-                            {'name': 'StevenP#1090', 'value': 'cute wang, pp touch, cutie, yogurt explosion, dolan, ydal, ur cute, waifu, cute boi, ploop, ugly, cute, princess tutu, poofster'},
-                            ],
+                        "fields": fields,
                     }
                 )
 
