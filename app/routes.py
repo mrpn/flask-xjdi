@@ -245,12 +245,14 @@ def info(ctx, user: str = None):
                     for x in results:
                         field = {"name": x.name, "value": ", ".join([z.name for z in x.characters][:-1])}
                         fields.append(field)
+                    print(fields)
                     return Message(
                     content=f"Found **`{len(results)}`** results for **`{user}`**",
                     embed={
                         "fields": fields,
                     }
                 )
+
                 # if results more than 10
                 else:
                     return Message(
