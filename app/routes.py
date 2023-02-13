@@ -200,6 +200,8 @@ def info(ctx, user: str = None):
                 # if results is greater than 1
                 if len(results) == 1:
                     notes = Comment.query.filter_by(comment_to_id=results[0].id).limit(3).all()
+                    user_notes = "\n".join([f"{x.author.name}: {x.body} \n" for x in notes])
+                    user_notes_truncated = user_notes[:140] + (user_notes[140:] and '...')
                     if results[0].avatar is None:
                         avatar_url = f"https://cdn.discordapp.com/embed/avatars/0.png"
                     else:
@@ -223,7 +225,8 @@ def info(ctx, user: str = None):
                             {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
                             {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
-                            {"name": "Notes (5)", "value": "\n".join([f"{x.author.name}: {x.body} \n" for x in notes])},
+                            {"name": f"Notes {len(notes)}", "value": user_notes_truncated},
+                            {"name": "Further information", "value": f"https://faceguild.app/member/{result_dict['0']['id']}>"},
                         ],
                     }
                 )
