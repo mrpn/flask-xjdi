@@ -225,7 +225,7 @@ def info(ctx, user: str = None):
                             {"name": "Characters", "value": ", ".join(result_dict['0']['characters'][:-1])},
                             {"name": "Discord created", "value": result_dict['0']['created'], "inline": True},
                             {"name": "Face joined", "value": result_dict['0']['joined'], "inline": True},
-                            {"name": f"Notes {len(notes)}", "value": user_notes_truncated},
+                            {"name": f"Notes ({len(notes)})", "value": user_notes_truncated},
                             {"name": "Further information", "value": f"https://faceguild.app/member/{result_dict['0']['id']}>"},
                         ],
                     }
